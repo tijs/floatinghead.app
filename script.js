@@ -96,6 +96,14 @@ async function toggleCamera() {
 
 btnTry.addEventListener('click', toggleCamera);
 
+// === REVIEWS INFINITE SCROLL ===
+const reviewsTrack = document.querySelector('.reviews-track');
+if (reviewsTrack) {
+  // Duplicate cards for seamless loop
+  const cards = reviewsTrack.innerHTML;
+  reviewsTrack.innerHTML = cards + cards;
+}
+
 // === SCROLL REVEAL ===
 const revealSections = document.querySelectorAll(
   '.what-section, .features-section, .usecases-section, .try-section, .reviews-section, .bottom-cta'
