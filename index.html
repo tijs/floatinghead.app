@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Floating Head — Show Yourself</title>
+  <meta name="description" content="A tiny macOS app that puts your face in a floating circle on top of everything. For screencasts, streams, and presentations.">
+  <meta property="og:title" content="Floating Head — Show Yourself">
+  <meta property="og:description" content="A tiny macOS app that puts your face in a floating circle on top of everything.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://floatinghead.app">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Instrument+Serif:ital@0;1&family=Anybody:wght@900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23C63F40'/><circle cx='35' cy='42' r='6' fill='white'/><line x1='58' y1='36' x2='68' y2='48' stroke='white' stroke-width='5' stroke-linecap='round'/><circle cx='50' cy='65' r='4' fill='white'/></svg>">
+</head>
+<body>
+  <!-- Noise overlay -->
+  <div class="noise"></div>
+
+  <!-- Floating webcam circle (draggable) -->
+  <div class="floating-cam" id="floatingCam">
+    <div class="cam-ring"></div>
+    <video id="camVideo" autoplay playsinline muted></video>
+    <div class="cam-placeholder" id="camPlaceholder">
+      <div class="wink-face">
+        <div class="wink-eye open"></div>
+        <div class="wink-eye closed"></div>
+        <div class="wink-mouth"></div>
+      </div>
+    </div>
+    <div class="cam-label">drag me</div>
+  </div>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-logo">
+      <svg class="wink-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="48" fill="#C63F40"/>
+        <circle cx="35" cy="42" r="6.5" fill="white"/>
+        <circle cx="35" cy="42" r="3" fill="#1a1a1a"/>
+        <line x1="58" y1="36" x2="70" y2="48" stroke="white" stroke-width="5.5" stroke-linecap="round"/>
+        <ellipse cx="50" cy="66" rx="5" ry="3.5" fill="white"/>
+      </svg>
+    </div>
+    <h1 class="hero-title">
+      <span class="hero-line-1">FLOATING</span>
+      <span class="hero-line-2">HEAD</span>
+    </h1>
+    <p class="hero-tagline">A tiny macOS app that puts <em>your&nbsp;face</em> on top of <em>everything.</em></p>
+    <div class="hero-cta">
+      <a href="https://apps.apple.com/us/app/floating-head-show-yourself/id1565946661?mt=12" class="btn-download">
+        <svg class="apple-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        Download on the Mac App Store
+      </a>
+      <span class="price-tag">$1.99</span>
+    </div>
+  </header>
+
+  <!-- Marquee -->
+  <div class="marquee-wrap">
+    <div class="marquee">
+      <span>SHOW YOURSELF &bull; SHOW YOURSELF &bull; SHOW YOURSELF &bull; SHOW YOURSELF &bull; SHOW YOURSELF &bull; SHOW YOURSELF &bull; SHOW YOURSELF &bull; SHOW YOURSELF &bull;&nbsp;</span>
+      <span>SHOW YOURSELF &bull; SHOW YOURSELF &bull; SHOW YOURSELF &bull; SHOW YOURSELF &bull; SHOW YOURSELF &bull; SHOW YOURSELF &bull; SHOW YOURSELF &bull; SHOW YOURSELF &bull;&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- What it does -->
+  <section class="what-section">
+    <div class="what-grid">
+      <div class="what-text">
+        <h2>What<br>is<br>this<br>thing?</h2>
+      </div>
+      <div class="what-answer">
+        <p class="big-p">It's a floating circle with your face in it.</p>
+        <p>Open the app. Pick your camera. A transparent, always-on-top circle appears with your webcam feed. Drag it anywhere. Start your screen recording, stream, or presentation. <strong>That's it.</strong></p>
+        <p>No complex OBS setup. No video editing. No layers, scenes, or fifteen-step tutorials. Just you, floating.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features (grid-breaking) -->
+  <section class="features-section">
+    <h2 class="features-heading">The good stuff</h2>
+    <div class="features-grid">
+      <div class="feature-card card-1">
+        <div class="feature-icon">&#9711;</div>
+        <h3>Three shapes</h3>
+        <p>Circle, rounded square, or hexagon. Because&nbsp;why&nbsp;not hexagon.</p>
+      </div>
+      <div class="feature-card card-2">
+        <div class="feature-icon">&harr;</div>
+        <h3>Any size</h3>
+        <p>Tiny and subtle or large and impossible to ignore. 100px to 600px.</p>
+      </div>
+      <div class="feature-card card-3">
+        <div class="feature-icon">&#9898;</div>
+        <h3>Custom borders</h3>
+        <p>White, black, or any color you want. Adjustable width. Get fancy.</p>
+      </div>
+      <div class="feature-card card-4">
+        <div class="feature-icon">&#8596;</div>
+        <h3>Mirror mode</h3>
+        <p>Flip the feed so you look the way you expect to look.</p>
+      </div>
+      <div class="feature-card card-5">
+        <div class="feature-icon">&#9676;</div>
+        <h3>All Spaces</h3>
+        <p>Stays visible across every macOS desktop and Space. Always there.</p>
+      </div>
+      <div class="feature-card card-6">
+        <div class="feature-icon">&#9052;</div>
+        <h3>Continuity Camera</h3>
+        <p>Use your iPhone as a webcam. Apple's best feature, now floating.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Use cases -->
+  <section class="usecases-section">
+    <div class="usecase-row">
+      <div class="usecase-num">01</div>
+      <div class="usecase-text">
+        <h3>Screencasts & tutorials</h3>
+        <p>Record your screen with your face floating in the corner. No editing needed — just the built-in macOS screen recorder.</p>
+      </div>
+    </div>
+    <div class="usecase-row">
+      <div class="usecase-num">02</div>
+      <div class="usecase-text">
+        <h3>Live presentations</h3>
+        <p>Share your screen on Zoom, Meet, or Teams while your face stays visible on top. Your audience sees you and your slides.</p>
+      </div>
+    </div>
+    <div class="usecase-row">
+      <div class="usecase-num">03</div>
+      <div class="usecase-text">
+        <h3>Game streaming</h3>
+        <p>A lightweight facecam without OBS complexity. Just open the app and stream.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Try it -->
+  <section class="try-section">
+    <h2>Try it right here</h2>
+    <p>Click the button below to activate your camera. Then drag the floating circle anywhere on this page.</p>
+    <button class="btn-try" id="btnTry">
+      Activate camera
+    </button>
+    <p class="try-note">Your camera feed stays in your browser. Nothing is recorded or sent anywhere.</p>
+  </section>
+
+  <!-- Reviews -->
+  <section class="reviews-section">
+    <div class="review-card">
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <blockquote>"Was looking to record my screen with a large version of me in webcam and the presentation just beside it. Only app that allows to resize the webcam image without losing quality. THANK&nbsp;YOU!"</blockquote>
+      <cite>— mgynyc</cite>
+    </div>
+    <div class="review-card">
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <blockquote>"This app is awesome. It was impossible not to leave a 10&#8209;star&nbsp;review!"</blockquote>
+      <cite>— i.am.shawn</cite>
+    </div>
+  </section>
+
+  <!-- Bottom CTA -->
+  <section class="bottom-cta">
+    <div class="bottom-cta-inner">
+      <svg class="wink-logo-big" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="48" fill="#C63F40"/>
+        <circle cx="35" cy="42" r="6.5" fill="white"/>
+        <circle cx="35" cy="42" r="3" fill="#1a1a1a"/>
+        <line x1="58" y1="36" x2="70" y2="48" stroke="white" stroke-width="5.5" stroke-linecap="round"/>
+        <ellipse cx="50" cy="66" rx="5" ry="3.5" fill="white"/>
+      </svg>
+      <h2>Show yourself.</h2>
+      <a href="https://apps.apple.com/us/app/floating-head-show-yourself/id1565946661?mt=12" class="btn-download btn-download-big">
+        <svg class="apple-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        Download for macOS — $1.99
+      </a>
+      <p class="compat">macOS 14.0 or later &bull; No data collected &bull; Family Sharing</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span class="footer-name">Floating Head</span> by <a href="https://tijs.org">Tijs</a>
+      </div>
+      <div class="footer-right">
+        <a href="https://tijs.weblog.lol/floatinghead/privacy-policy">Privacy</a>
+        <a href="https://tijs.weblog.lol/floatinghead/terms-conditions">Terms</a>
+        <a href="mailto:hello@tijs.org">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
