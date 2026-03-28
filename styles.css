@@ -482,9 +482,11 @@ strong { color: var(--off-white); }
 }
 .reviews-track {
   display: flex;
+  flex-wrap: nowrap;
   gap: 24px;
   animation: reviewScroll 40s linear infinite;
   width: max-content;
+  will-change: transform;
 }
 .reviews-track:hover {
   animation-play-state: paused;
@@ -596,7 +598,6 @@ strong { color: var(--off-white); }
 .features-section,
 .usecases-section,
 .try-section,
-.reviews-section,
 .bottom-cta {
   opacity: 0;
   transform: translateY(30px);
@@ -606,7 +607,6 @@ strong { color: var(--off-white); }
 .features-section.visible,
 .usecases-section.visible,
 .try-section.visible,
-.reviews-section.visible,
 .bottom-cta.visible {
   opacity: 1;
   transform: translateY(0);

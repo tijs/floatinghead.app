@@ -106,7 +106,7 @@ if (reviewsTrack) {
 
 // === SCROLL REVEAL ===
 const revealSections = document.querySelectorAll(
-  '.what-section, .features-section, .usecases-section, .try-section, .reviews-section, .bottom-cta'
+  '.what-section, .features-section, .usecases-section, .try-section, .bottom-cta'
 );
 
 const observer = new IntersectionObserver((entries) => {
