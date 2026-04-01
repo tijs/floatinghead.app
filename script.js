@@ -72,9 +72,20 @@ async function toggleCamera() {
       video: { facingMode: 'user', width: { ideal: 320 }, height: { ideal: 320 } }
     });
 
-    // Animate the logo to floating position
+    // Capture where the logo is right now
     const rect = logo.getBoundingClientRect();
-    // Set starting position so the transition animates from current spot
+
+    // Calculate target position (what .floating CSS will give us)
+    const targetSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cam-size')) || 160;
+    const targetTop = window.innerWidth <= 500 ? 14 : (window.innerWidth <= 900 ? 20 : 60);
+    const targetRight = window.innerWidth <= 500 ? 14 : (window.innerWidth <= 900 ? 20 : 40);
+    const targetLeft = window.innerWidth - targetRight - targetSize;
+
+    // Show the spacer so layout doesn't jump
+    spacer.style.display = 'block';
+
+    // Pin logo at its current visual position as fixed
+    logo.style.transition = 'none';
     logo.style.position = 'fixed';
     logo.style.left = rect.left + 'px';
     logo.style.top = rect.top + 'px';
@@ -84,31 +95,34 @@ async function toggleCamera() {
     logo.style.margin = '0';
     logo.style.zIndex = '10000';
 
-    // Show the spacer
-    spacer.style.display = 'block';
-
-    // Force reflow before adding the class
+    // Force layout so the browser registers the starting position
     logo.offsetHeight;
 
-    // Start the video
+    // Start the video feed
     video.srcObject = cameraStream;
     video.classList.add('active');
 
-    // Animate to floating position
-    logo.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-    logo.classList.add('floating');
-    // Clear inline position overrides so the .floating CSS takes over
-    logo.style.left = '';
-    logo.style.top = '';
-    logo.style.right = '';
-    logo.style.width = '';
-    logo.style.height = '';
-    logo.style.margin = '';
+    // Now animate to target position
+    logo.style.transition = 'left 0.5s cubic-bezier(0.4,0,0.2,1), top 0.5s cubic-bezier(0.4,0,0.2,1), width 0.5s cubic-bezier(0.4,0,0.2,1), height 0.5s cubic-bezier(0.4,0,0.2,1), box-shadow 0.5s cubic-bezier(0.4,0,0.2,1)';
+    logo.style.left = targetLeft + 'px';
+    logo.style.top = targetTop + 'px';
+    logo.style.width = targetSize + 'px';
+    logo.style.height = targetSize + 'px';
+    logo.style.boxShadow = '0 8px 40px rgba(0,0,0,0.6), 0 0 0 3px #C63F40';
 
-    // Clean up inline transition after animation
+    // After the animation finishes, switch to the .floating class
     setTimeout(() => {
+      logo.classList.add('floating');
       logo.style.transition = '';
-    }, 550);
+      logo.style.position = '';
+      logo.style.left = '';
+      logo.style.top = '';
+      logo.style.right = '';
+      logo.style.width = '';
+      logo.style.height = '';
+      logo.style.margin = '';
+      logo.style.boxShadow = '';
+    }, 520);
 
     btnTry.textContent = 'Deactivate camera';
     btnTry.classList.add('active');
@@ -133,30 +147,34 @@ function deactivateCamera() {
   video.srcObject = null;
   video.classList.remove('active');
 
-  // Animate back to hero position
-  const spacerRect = spacer.getBoundingClientRect();
+  // Get current floating position
   const currentRect = logo.getBoundingClientRect();
+  const spacerRect = spacer.getBoundingClientRect();
 
+  // Remove .floating class and pin at current spot
+  logo.classList.remove('floating');
+  logo.style.transition = 'none';
   logo.style.position = 'fixed';
   logo.style.left = currentRect.left + 'px';
   logo.style.top = currentRect.top + 'px';
   logo.style.right = 'auto';
   logo.style.width = currentRect.width + 'px';
   logo.style.height = currentRect.height + 'px';
-  logo.classList.remove('floating');
+  logo.style.margin = '0';
+  logo.style.zIndex = '10000';
 
-  // Force reflow
+  // Force layout
   logo.offsetHeight;
 
-  // Animate to spacer position
-  logo.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+  // Animate back to hero position
+  logo.style.transition = 'left 0.5s cubic-bezier(0.4,0,0.2,1), top 0.5s cubic-bezier(0.4,0,0.2,1), width 0.5s cubic-bezier(0.4,0,0.2,1), height 0.5s cubic-bezier(0.4,0,0.2,1), box-shadow 0.5s cubic-bezier(0.4,0,0.2,1)';
   logo.style.left = spacerRect.left + 'px';
   logo.style.top = spacerRect.top + 'px';
   logo.style.width = '72px';
   logo.style.height = '72px';
+  logo.style.boxShadow = 'none';
 
   setTimeout(() => {
-    // Reset to flow layout
     logo.style.position = '';
     logo.style.left = '';
     logo.style.top = '';
@@ -166,6 +184,7 @@ function deactivateCamera() {
     logo.style.margin = '';
     logo.style.zIndex = '';
     logo.style.transition = '';
+    logo.style.boxShadow = '';
     spacer.style.display = 'none';
   }, 520);
 

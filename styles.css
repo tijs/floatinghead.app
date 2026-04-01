@@ -116,10 +116,10 @@ strong { color: var(--off-white); }
   left: auto;
   width: var(--cam-size);
   height: var(--cam-size);
-  z-index: 10000;
+  z-index: 10001;
   cursor: grab;
   margin-bottom: 0;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 0 3px var(--coral);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 0 3px var(--coral), 0 20px 60px rgba(0,0,0,0.4);
   animation: none;
 }
 .hero-logo.floating:hover {
