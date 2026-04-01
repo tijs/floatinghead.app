@@ -49,100 +49,7 @@ strong { color: var(--off-white); }
   background-size: 256px;
 }
 
-/* === FLOATING CAM === */
-.floating-cam {
-  position: fixed;
-  top: 60px;
-  right: 40px;
-  width: var(--cam-size);
-  height: var(--cam-size);
-  border-radius: 50%;
-  z-index: 10000;
-  cursor: grab;
-  overflow: hidden;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 0 3px var(--coral);
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
-  user-select: none;
-  -webkit-user-select: none;
-}
-.floating-cam:hover {
-  box-shadow: 0 12px 50px rgba(198,63,64,0.4), 0 0 0 3px var(--coral-light);
-  transform: scale(1.03);
-}
-.floating-cam:active { cursor: grabbing; transform: scale(0.98); }
-.floating-cam .cam-ring {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 3px solid var(--coral);
-  z-index: 2;
-  pointer-events: none;
-}
-.floating-cam video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scaleX(-1);
-  display: none;
-}
-.floating-cam video.active { display: block; }
-.cam-placeholder {
-  width: 100%;
-  height: 100%;
-  background: var(--off-black);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.cam-placeholder.hidden { display: none; }
-
-/* Wink face in placeholder */
-.wink-face {
-  position: relative;
-  width: 70px;
-  height: 50px;
-}
-.wink-eye {
-  position: absolute;
-  top: 0;
-}
-.wink-eye.open {
-  left: 5px;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--off-white);
-}
-.wink-eye.open::after {
-  content: '';
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--black);
-}
-.wink-eye.closed {
-  right: 5px;
-  top: 8px;
-  width: 18px;
-  height: 3px;
-  background: var(--off-white);
-  border-radius: 2px;
-  transform: rotate(-10deg);
-}
-.wink-mouth {
-  position: absolute;
-  bottom: 2px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 12px;
-  height: 8px;
-  border-radius: 0 0 50% 50%;
-  background: var(--off-white);
-}
-
+/* === HERO LOGO / FLOATING CAM === */
 .cam-label {
   position: absolute;
   bottom: -28px;
@@ -156,8 +63,8 @@ strong { color: var(--off-white); }
   opacity: 0;
   transition: opacity 0.3s;
   font-family: var(--font-mono);
+  pointer-events: none;
 }
-.floating-cam:hover .cam-label { opacity: 1; }
 
 /* === HERO === */
 .hero {
@@ -170,11 +77,80 @@ strong { color: var(--off-white); }
 }
 .hero-logo {
   margin-bottom: 30px;
-}
-.wink-logo {
   width: 72px;
   height: 72px;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s ease,
+              margin-bottom 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hero-logo:hover {
+  box-shadow: 0 0 0 3px var(--coral-light), 0 8px 30px rgba(198,63,64,0.3);
+}
+.hero-logo video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.hero-logo video.active {
+  opacity: 1;
+}
+/* Floating state — logo becomes a fixed draggable cam */
+.hero-logo.floating {
+  position: fixed;
+  top: 60px;
+  right: 40px;
+  left: auto;
+  width: var(--cam-size);
+  height: var(--cam-size);
+  z-index: 10000;
+  cursor: grab;
+  margin-bottom: 0;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 0 3px var(--coral);
+  animation: none;
+}
+.hero-logo.floating:hover {
+  box-shadow: 0 12px 50px rgba(198,63,64,0.4), 0 0 0 3px var(--coral-light);
+  transform: scale(1.03);
+}
+.hero-logo.floating:active {
+  cursor: grabbing;
+  transform: scale(0.98);
+}
+.hero-logo.floating .cam-label { opacity: 0; }
+.hero-logo.floating:hover .cam-label { opacity: 1; }
+.hero-logo.floating .wink-logo {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+/* Spacer to prevent layout shift when logo goes fixed */
+.hero-logo-spacer {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 30px;
+  display: none;
+}
+.wink-logo {
+  width: 100%;
+  height: 100%;
+  display: block;
   animation: float 4s ease-in-out infinite;
+  transition: opacity 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
 @keyframes float {
   0%, 100% { transform: translateY(0); }
@@ -681,7 +657,7 @@ strong { color: var(--off-white); }
   .review-card blockquote {
     font-size: 19px;
   }
-  .floating-cam {
+  .hero-logo.floating {
     --cam-size: 120px;
     top: 20px;
     right: 20px;
@@ -748,7 +724,7 @@ strong { color: var(--off-white); }
     width: 100%;
     justify-content: center;
   }
-  .floating-cam {
+  .hero-logo.floating {
     --cam-size: 80px;
     top: 14px;
     right: 14px;

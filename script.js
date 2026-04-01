@@ -1,74 +1,69 @@
-// === FLOATING CAMERA (draggable) ===
-const cam = document.getElementById('floatingCam');
+// === LOGO → FLOATING CAMERA ===
+const logo = document.getElementById('heroLogo');
 const video = document.getElementById('camVideo');
-const placeholder = document.getElementById('camPlaceholder');
 const btnTry = document.getElementById('btnTry');
 
 let isDragging = false;
 let hasMoved = false;
 let dragOffset = { x: 0, y: 0 };
 let startPos = { x: 0, y: 0 };
+let cameraActive = false;
+let cameraStream = null;
 
-cam.addEventListener('pointerdown', (e) => {
+// Insert a spacer element after the logo to prevent layout shift
+const spacer = document.createElement('div');
+spacer.className = 'hero-logo-spacer';
+logo.parentNode.insertBefore(spacer, logo.nextSibling);
+
+// === DRAG HANDLING (only when floating) ===
+logo.addEventListener('pointerdown', (e) => {
+  if (!logo.classList.contains('floating')) return;
   isDragging = true;
   hasMoved = false;
-  cam.setPointerCapture(e.pointerId);
-  dragOffset.x = e.clientX - cam.getBoundingClientRect().left;
-  dragOffset.y = e.clientY - cam.getBoundingClientRect().top;
+  logo.setPointerCapture(e.pointerId);
+  dragOffset.x = e.clientX - logo.getBoundingClientRect().left;
+  dragOffset.y = e.clientY - logo.getBoundingClientRect().top;
   startPos.x = e.clientX;
   startPos.y = e.clientY;
-  cam.style.transition = 'none';
+  logo.style.transition = 'none';
 });
 
 window.addEventListener('pointermove', (e) => {
   if (!isDragging) return;
   const dx = e.clientX - startPos.x;
   const dy = e.clientY - startPos.y;
-  // Only start moving after a 5px threshold to distinguish click from drag
   if (!hasMoved && Math.abs(dx) < 5 && Math.abs(dy) < 5) return;
   hasMoved = true;
   const x = e.clientX - dragOffset.x;
   const y = e.clientY - dragOffset.y;
-  cam.style.left = x + 'px';
-  cam.style.top = y + 'px';
-  cam.style.right = 'auto';
+  logo.style.left = x + 'px';
+  logo.style.top = y + 'px';
+  logo.style.right = 'auto';
 });
 
 window.addEventListener('pointerup', () => {
-  const wasClick = isDragging && !hasMoved;
+  if (!isDragging) return;
   isDragging = false;
-  cam.style.transition = '';
-  // If it was a click (no drag), activate camera
-  if (wasClick && !video.classList.contains('active')) {
-    toggleCamera();
-  }
+  logo.style.transition = '';
 });
 
-// === WEBCAM ACTIVATION ===
-let cameraActive = false;
-let cameraStream = null;
+// === CLICK: ACTIVATE / DEACTIVATE ===
+logo.addEventListener('click', () => {
+  if (hasMoved) return;
+  toggleCamera();
+});
+
+btnTry.addEventListener('click', toggleCamera);
 
 async function toggleCamera() {
   if (cameraActive) {
-    // Stop the camera
-    if (cameraStream) {
-      cameraStream.getTracks().forEach(track => track.stop());
-      cameraStream = null;
-    }
-    video.srcObject = null;
-    video.classList.remove('active');
-    placeholder.classList.remove('hidden');
-    btnTry.textContent = 'Activate camera';
-    btnTry.classList.remove('active');
-    cameraActive = false;
+    deactivateCamera();
     return;
   }
 
-  // Check if getUserMedia is available (won't work on file:// in some browsers)
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
     btnTry.textContent = 'Needs HTTPS';
     btnTry.style.opacity = '0.5';
-    btnTry.title = 'Camera requires a web server (HTTPS). Try: python3 -m http.server';
     return;
   }
 
@@ -76,9 +71,45 @@ async function toggleCamera() {
     cameraStream = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: 'user', width: { ideal: 320 }, height: { ideal: 320 } }
     });
+
+    // Animate the logo to floating position
+    const rect = logo.getBoundingClientRect();
+    // Set starting position so the transition animates from current spot
+    logo.style.position = 'fixed';
+    logo.style.left = rect.left + 'px';
+    logo.style.top = rect.top + 'px';
+    logo.style.right = 'auto';
+    logo.style.width = rect.width + 'px';
+    logo.style.height = rect.height + 'px';
+    logo.style.margin = '0';
+    logo.style.zIndex = '10000';
+
+    // Show the spacer
+    spacer.style.display = 'block';
+
+    // Force reflow before adding the class
+    logo.offsetHeight;
+
+    // Start the video
     video.srcObject = cameraStream;
     video.classList.add('active');
-    placeholder.classList.add('hidden');
+
+    // Animate to floating position
+    logo.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+    logo.classList.add('floating');
+    // Clear inline position overrides so the .floating CSS takes over
+    logo.style.left = '';
+    logo.style.top = '';
+    logo.style.right = '';
+    logo.style.width = '';
+    logo.style.height = '';
+    logo.style.margin = '';
+
+    // Clean up inline transition after animation
+    setTimeout(() => {
+      logo.style.transition = '';
+    }, 550);
+
     btnTry.textContent = 'Deactivate camera';
     btnTry.classList.add('active');
     cameraActive = true;
@@ -94,12 +125,59 @@ async function toggleCamera() {
   }
 }
 
-btnTry.addEventListener('click', toggleCamera);
+function deactivateCamera() {
+  if (cameraStream) {
+    cameraStream.getTracks().forEach(track => track.stop());
+    cameraStream = null;
+  }
+  video.srcObject = null;
+  video.classList.remove('active');
+
+  // Animate back to hero position
+  const spacerRect = spacer.getBoundingClientRect();
+  const currentRect = logo.getBoundingClientRect();
+
+  logo.style.position = 'fixed';
+  logo.style.left = currentRect.left + 'px';
+  logo.style.top = currentRect.top + 'px';
+  logo.style.right = 'auto';
+  logo.style.width = currentRect.width + 'px';
+  logo.style.height = currentRect.height + 'px';
+  logo.classList.remove('floating');
+
+  // Force reflow
+  logo.offsetHeight;
+
+  // Animate to spacer position
+  logo.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+  logo.style.left = spacerRect.left + 'px';
+  logo.style.top = spacerRect.top + 'px';
+  logo.style.width = '72px';
+  logo.style.height = '72px';
+
+  setTimeout(() => {
+    // Reset to flow layout
+    logo.style.position = '';
+    logo.style.left = '';
+    logo.style.top = '';
+    logo.style.right = '';
+    logo.style.width = '';
+    logo.style.height = '';
+    logo.style.margin = '';
+    logo.style.zIndex = '';
+    logo.style.transition = '';
+    spacer.style.display = 'none';
+  }, 520);
+
+  btnTry.textContent = 'Activate camera';
+  btnTry.classList.remove('active');
+  btnTry.style.opacity = '';
+  cameraActive = false;
+}
 
 // === REVIEWS INFINITE SCROLL ===
 const reviewsTrack = document.querySelector('.reviews-track');
 if (reviewsTrack) {
-  // Duplicate cards for seamless loop
   const cards = reviewsTrack.innerHTML;
   reviewsTrack.innerHTML = cards + cards;
 }

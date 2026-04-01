@@ -19,23 +19,9 @@
   <!-- Noise overlay -->
   <div class="noise"></div>
 
-  <!-- Floating webcam circle (draggable) -->
-  <div class="floating-cam" id="floatingCam">
-    <div class="cam-ring"></div>
-    <video id="camVideo" autoplay playsinline muted></video>
-    <div class="cam-placeholder" id="camPlaceholder">
-      <div class="wink-face">
-        <div class="wink-eye open"></div>
-        <div class="wink-eye closed"></div>
-        <div class="wink-mouth"></div>
-      </div>
-    </div>
-    <div class="cam-label">drag me</div>
-  </div>
-
   <!-- Hero -->
   <header class="hero">
-    <div class="hero-logo">
+    <div class="hero-logo" id="heroLogo">
       <svg class="wink-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
         <circle cx="50" cy="50" r="48" fill="#C63F40"/>
         <circle cx="35" cy="42" r="6.5" fill="white"/>
@@ -43,6 +29,8 @@
         <line x1="58" y1="36" x2="70" y2="48" stroke="white" stroke-width="5.5" stroke-linecap="round"/>
         <ellipse cx="50" cy="66" rx="5" ry="3.5" fill="white"/>
       </svg>
+      <video id="camVideo" autoplay playsinline muted></video>
+      <div class="cam-label">drag me</div>
     </div>
     <h1 class="hero-title">
       <span class="hero-line-1">FLOATING</span>
@@ -145,7 +133,7 @@
   <!-- Try it -->
   <section class="try-section">
     <h2>Try it right here</h2>
-    <p>Click the button below to activate your camera. Then drag the floating circle anywhere on this page.</p>
+    <p>Tap the logo above or click the button below. Your camera feed appears in a floating circle you can drag anywhere.</p>
     <button class="btn-try" id="btnTry">
       Activate camera
     </button>
