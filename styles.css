@@ -646,21 +646,40 @@ strong { color: var(--off-white); }
 @media (max-width: 900px) {
   .what-grid {
     grid-template-columns: 1fr;
-    gap: 30px;
+    gap: 24px;
   }
   .what-text h2 {
     font-size: 48px;
   }
+  .what-section {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
   .features-grid {
     grid-template-columns: 1fr;
+    gap: 0;
   }
   .feature-card,
   .card-1, .card-2, .card-3,
   .card-4, .card-5, .card-6 {
     grid-column: auto;
   }
+  .feature-card {
+    padding: 32px 24px;
+  }
+  .features-section {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+  .features-heading {
+    margin-bottom: 40px;
+  }
   .review-card {
     width: 300px;
+    padding: 28px 24px;
+  }
+  .review-card blockquote {
+    font-size: 19px;
   }
   .floating-cam {
     --cam-size: 120px;
@@ -679,21 +698,139 @@ strong { color: var(--off-white); }
     padding-left: 24px;
     padding-right: 24px;
   }
+  .usecases-section {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
   .usecase-row {
     flex-direction: column;
     gap: 12px;
+    padding: 28px 0;
   }
   .usecase-num {
     font-size: 36px;
     min-width: auto;
   }
+  .try-section {
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
+  .bottom-cta {
+    padding-top: 80px;
+    padding-bottom: 70px;
+  }
+  .bottom-cta h2 {
+    margin-bottom: 24px;
+  }
+  .btn-download-big {
+    font-size: 14px;
+    padding: 16px 28px;
+  }
 }
 
 @media (max-width: 500px) {
-  .hero-title {
-    font-size: 60px;
+  .hero {
+    padding: 90px 18px 50px;
+  }
+  .hero-tagline {
+    margin-top: 22px;
+    font-size: 16px;
+  }
+  .hero-cta {
+    margin-top: 30px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .btn-download {
+    font-size: 13px;
+    padding: 13px 22px;
+    width: 100%;
+    justify-content: center;
   }
   .floating-cam {
-    --cam-size: 90px;
+    --cam-size: 80px;
+    top: 14px;
+    right: 14px;
+  }
+  .what-section,
+  .features-section,
+  .usecases-section,
+  .try-section,
+  .bottom-cta,
+  .footer {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+  .what-section {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+  .what-answer .big-p {
+    font-size: 24px;
+  }
+  .features-section {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+  .features-heading {
+    font-size: 36px;
+    margin-bottom: 30px;
+  }
+  .feature-card {
+    padding: 26px 18px;
+  }
+  .feature-card h3 {
+    font-size: 14px;
+  }
+  .feature-card p {
+    font-size: 13px;
+  }
+  .usecase-text h3 {
+    font-size: 15px;
+  }
+  .usecase-text p {
+    font-size: 14px;
+  }
+  .review-card {
+    width: 260px;
+    padding: 24px 20px;
+  }
+  .review-card blockquote {
+    font-size: 17px;
+  }
+  .try-section {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+  .try-section h2 {
+    font-size: 32px;
+  }
+  .btn-try {
+    font-size: 14px;
+    padding: 14px 32px;
+  }
+  .bottom-cta {
+    padding-top: 60px;
+    padding-bottom: 50px;
+  }
+  .wink-logo-big {
+    width: 72px;
+    height: 72px;
+    margin-bottom: 20px;
+  }
+  .btn-download-big {
+    font-size: 13px;
+    padding: 14px 22px;
+    width: 100%;
+    justify-content: center;
+  }
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .reviews-section {
+    padding: 40px 0;
   }
 }
