@@ -86,6 +86,8 @@ async function toggleCamera() {
 
     // Pin logo at its current visual position as fixed
     logo.style.transition = 'none';
+    logo.style.animation = 'none';
+    logo.style.opacity = '1';
     logo.style.position = 'fixed';
     logo.style.left = rect.left + 'px';
     logo.style.top = rect.top + 'px';
@@ -93,7 +95,7 @@ async function toggleCamera() {
     logo.style.width = rect.width + 'px';
     logo.style.height = rect.height + 'px';
     logo.style.margin = '0';
-    logo.style.zIndex = '10000';
+    logo.style.zIndex = '10001';
 
     // Force layout so the browser registers the starting position
     logo.offsetHeight;
@@ -185,6 +187,8 @@ function deactivateCamera() {
     logo.style.zIndex = '';
     logo.style.transition = '';
     logo.style.boxShadow = '';
+    logo.style.animation = '';
+    logo.style.opacity = '';
     spacer.style.display = 'none';
   }, 520);
 
