@@ -97,7 +97,7 @@
     <p>Floating Head uses no third-party services, SDKs, or frameworks. It is built entirely with Apple's native frameworks (SwiftUI, AppKit, AVFoundation).</p>
 
     <h2>Website</h2>
-    <p>The Floating Head website at floatinghead.app uses a self-hosted, privacy-friendly page view counter (<a href="https://counter.dev">counter.dev</a>). It does not use cookies, does not store IP addresses, and only records a single page view per session. The data collected is limited to referrer URL, screen resolution, and timezone offset. The "Try it" camera demo on the homepage runs entirely in your browser — no video data is transmitted.</p>
+    <p>The Floating Head website at floatinghead.app uses <a href="https://www.simpleanalytics.com">Simple Analytics</a>, a privacy-friendly analytics service. It does not use cookies and does not collect personal data. The "Try it" camera demo on the homepage runs entirely in your browser — no video data is transmitted.</p>
 
     <h2>Children's privacy</h2>
     <p>Since Floating Head collects no data, there are no special concerns regarding children's privacy.</p>
@@ -121,28 +121,7 @@
       </div>
     </div>
   </footer>
-  <script>
-    try {
-      if (
-        !sessionStorage.getItem("_swa") &&
-        document.referrer.indexOf(
-            location.protocol + "//" + location.host,
-          ) !== 0
-      ) {
-        fetch(
-          "https://counter.tijs.org/track?" +
-            new URLSearchParams({
-              site: "tijs",
-              utcoffset: String(
-                -(new Date().getTimezoneOffset() / 60),
-              ),
-              referrer: document.referrer,
-              screen: screen.width + "x" + screen.height,
-            }),
-        ).catch(function(){});
-      }
-      sessionStorage.setItem("_swa", "1");
-    } catch (e) {}
-  </script>
+  <!-- 100% privacy-first analytics -->
+  <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 </body>
 </html>
